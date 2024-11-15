@@ -27,24 +27,18 @@ TEMP_PKG_DIR="$TEMP_DIR/$PKG_NAME"
 mkdir -p "$TEMP_PKG_DIR/CONTROL/"
 mkdir -p "$TEMP_PKG_DIR/lib/upgrade/keep.d/"
 mkdir -p "$TEMP_PKG_DIR/usr/lib/lua/luci/i18n/"
-mkdir -p "$TEMP_PKG_DIR/www/"
 
-cp -fpR "$PKG_DIR/htdocs"/* "$TEMP_PKG_DIR/www/"
 cp -fpR "$PKG_DIR/root"/* "$TEMP_PKG_DIR/"
 
-echo -e "/etc/config/homeproxy" > "$TEMP_PKG_DIR/CONTROL/conffiles"
+echo -e "/etc/config/dae" > "$TEMP_PKG_DIR/CONTROL/conffiles"
 cat > "$TEMP_PKG_DIR/lib/upgrade/keep.d/$PKG_NAME" <<-EOF
-/etc/homeproxy/certs/
-/etc/homeproxy/ruleset/
-/etc/homeproxy/resources/direct_list.txt
-/etc/homeproxy/resources/proxy_list.txt
 EOF
 
 cat > "$TEMP_PKG_DIR/CONTROL/control" <<-EOF
 	Package: $PKG_NAME
 	Version: $PKG_VERSION
-	Depends: libc, sing-box, chinadns-ng, firewall4, kmod-nft-tproxy
-	Source: https://github.com/immortalwrt/homeproxy
+	Depends: libc, firewall4, kmod-nft-tproxy
+	Source: https://github.com/daeuniverse/dae
 	SourceName: $PKG_NAME
 	Section: luci
 	SourceDateEpoch: $PKG_SOURCE_DATE_EPOCH
@@ -61,7 +55,7 @@ echo "modules/luci-base/src" >> ".git/info/sparse-checkout"
 git checkout
 cd "modules/luci-base/src"
 make po2lmo
-./po2lmo "$PKG_DIR/po/zh_Hans/homeproxy.po" "$TEMP_PKG_DIR/usr/lib/lua/luci/i18n/homeproxy.zh-cn.lmo"
+./po2lmo "$PKG_DIR/po/zh_Hans/dae.po" "$TEMP_PKG_DIR/usr/lib/lua/luci/i18n/dae.zh-cn.lmo"
 popd
 rm -rf "po2lmo"
 
