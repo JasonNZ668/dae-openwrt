@@ -1,9 +1,9 @@
-name: Build dae.apk
+name: Build 23.5.4 dae.apk
 
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */6 * * *'
+    - cron: '0 */12 * * *'
 
 permissions:
   actions: write
@@ -50,7 +50,6 @@ jobs:
 
       - name: Get latest dae version
         run: |
-          #TAG=$(curl -s "https://api.github.com/repos/daeuniverse/dae/tags" | jq -r '.[1].name' | tr -d 'v')
           TAG=$(curl -s 'https://api.github.com/repos/daeuniverse/dae/releases/latest' | jq -r '.tag_name' | tr -d 'v')
           echo "TAG=$TAG"
           echo "TAG=$TAG" >> $GITHUB_ENV
@@ -59,10 +58,10 @@ jobs:
         run: |
           case "${{ matrix.arch }}" in
             aarch64_generic)
-              TARGET_URL="https://downloads.immortalwrt.org/snapshots/targets/rockchip/armv8/"
+              TARGET_URL="https://downloads.immortalwrt.org/releases/23.05.4/targets/rockchip/armv8/"
               ;;
             x86_64)
-              TARGET_URL="https://downloads.immortalwrt.org/snapshots/targets/x86/64/"
+              TARGET_URL="https://downloads.immortalwrt.org/releases/23.05.4/targets/x86/64/"
               ;;
           esac
 
