@@ -1,4 +1,4 @@
-name: Build Mihomo.apk
+name: Build dae.apk
 
 on:
   workflow_dispatch:
@@ -48,9 +48,9 @@ jobs:
         run: |
           go version
 
-      - name: Get latest mihomo version
+      - name: Get latest dae version
         run: |
-          TAG=$(curl -s "https://api.github.com/repos/MetaCubeX/mihomo/tags" | jq -r '.[0].name' | tr -d 'v')
+          TAG=$(curl -s "https://api.github.com/repos/daeuniverse/dae/tags" | jq -r '.[1].name' | tr -d 'v')
           echo "TAG=$TAG" >> $GITHUB_ENV
 
       - name: Build
@@ -74,11 +74,11 @@ jobs:
           wget "${TARGET_URL}config.buildinfo" -O .config
           make defconfig
           cp -a ../net package/
-          sed -i 's/PKG_VERSION:=stable/PKG_VERSION:=${{ env.TAG }}/g' package/net/mihomo/Makefile
-          cat package/net/mihomo/Makefile
-          make package/net/mihomo/{download,check} FIXUP=1 V=s
-          cat package/net/mihomo/Makefile
-          make package/net/mihomo/compile V=s
+          sed -i 's/PKG_VERSION:=stable/PKG_VERSION:=${{ env.TAG }}/g' package/net/dae/Makefile
+          cat package/net/dae/Makefile
+          make package/net/dae/{download,check} FIXUP=1 V=s
+          cat package/net/dae/Makefile
+          make package/net/dae/compile V=s
 
           find bin/packages -name '*.apk' -exec sh -c 'mv "$1" "${1%.apk}_${{ matrix.arch }}.apk"' _ {} \;
           FN=$(find bin/packages -name '*.apk' | sort | head -1 | xargs basename)
@@ -90,7 +90,7 @@ jobs:
         with:
           name: ${{ env.PKG_NAME }}
           path: |
-            sdk/bin/packages/*/*/mihomo*.apk
+            sdk/bin/packages/*/*/dae*.apk
 
       - name: Read release.md and use it as a body of new release
         id: read_release
@@ -109,7 +109,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: sdk/bin/packages/*/*/mihomo*.apk
+          file: sdk/bin/packages/*/*/dae*.apk
           tag: ${{ steps.read_release.outputs.RELEASE_TAG }}
           file_glob: true
           overwrite: true
