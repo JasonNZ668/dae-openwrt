@@ -89,7 +89,16 @@ jobs:
 
           ls ${{ github.workspace }}
           ls -R bin/packages
-          ls -l bin/packages/x86_64/base
+
+          case "${{ matrix.arch }}" in
+            aarch64_generic)
+              ls -l bin/packages/aarch64_generic/base
+              ;;
+            x86_64)
+              ls -l bin/packages/x86_64/base
+              ;;
+          esac
+          
           echo "🍏 This job's status is ${{ job.status }}."
           
           echo "---------find name---------------"
@@ -115,7 +124,14 @@ jobs:
         with:
           name: ${{ env.PKG_NAME }}
           path: |
-            sdk/bin/packages/*/*/dae*.?pk
+            case "${{ matrix.arch }}" in
+              aarch64_generic)
+                sdk/bin/packages/*/*/dae*.apk
+                ;;
+              x86_64)
+                sdk/bin/packages/*/*/dae*.ipk
+                ;;
+            esac            
 
       - name: Read release.md and use it as a body of new release
         id: read_release
