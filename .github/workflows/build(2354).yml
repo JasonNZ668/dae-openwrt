@@ -93,8 +93,18 @@ jobs:
           echo "🍏 This job's status is ${{ job.status }}."
           
           echo "---------find name---------------"
-          find bin/packages -name '*.ipk' -exec sh -c 'mv "$1" "${1%.ipk}_${{ matrix.arch }}.ipk"' _ {} \;
-          FN=$(find bin/packages -name '*.ipk' | sort | head -1 | xargs basename)
+
+          case "${{ matrix.arch }}" in
+            aarch64_generic)
+              find bin/packages -name '*.apk' -exec sh -c 'mv "$1" "${1%.apk}_${{ matrix.arch }}.apk"' _ {} \;
+              FN=$(find bin/packages -name '*.apk' | sort | head -1 | xargs basename)
+              ;;
+            x86_64)
+              find bin/packages -name '*.ipk' -exec sh -c 'mv "$1" "${1%.ipk}_${{ matrix.arch }}.ipk"' _ {} \;
+              FN=$(find bin/packages -name '*.ipk' | sort | head -1 | xargs basename)
+              ;;
+          esac
+        
           echo "---------SDK---------------"
           echo "PKG_NAME=$FN"
           echo "PKG_NAME=$FN" >> $GITHUB_ENV
@@ -105,7 +115,7 @@ jobs:
         with:
           name: ${{ env.PKG_NAME }}
           path: |
-            sdk/bin/packages/*/*/dae*.ipk
+            sdk/bin/packages/*/*/dae*.?pk
 
       - name: Read release.md and use it as a body of new release
         id: read_release
@@ -127,7 +137,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: sdk/bin/packages/*/*/dae*.ipk
+          file: sdk/bin/packages/*/*/dae*.?pk
           tag: ${{ steps.read_release.outputs.RELEASE_TAG }}
           file_glob: true
           overwrite: true
