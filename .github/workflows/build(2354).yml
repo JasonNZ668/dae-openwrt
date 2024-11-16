@@ -107,8 +107,11 @@ jobs:
           r="${r//'%'/'%25'}"
           r="${r//$'\n'/'%0A'}"
           r="${r//$'\r'/'%0D'}"
+          echo "-----------release------------" 
+          echo "RELEASE_BODY=$r" 
           echo "RELEASE_BODY=$r" >> $GITHUB_OUTPUT
           tag=$(date +"%Y%m%d")
+          echo "RELEASE_TAG=$tag"
           echo "RELEASE_TAG=$tag" >> $GITHUB_OUTPUT
 
 
