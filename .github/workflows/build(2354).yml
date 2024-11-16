@@ -93,7 +93,7 @@ jobs:
           echo "🍏 This job's status is ${{ job.status }}."
           
           echo "---------find name---------------"
-          find bin/packages -name '*.ipk' -exec sh -c 'mv "$1" "${1%.apk}_${{ matrix.arch }}.apk"' _ {} \;
+          find bin/packages -name '*.ipk' -exec sh -c 'mv "$1" "${1%.ipk}_${{ matrix.arch }}.ipk"' _ {} \;
           FN=$(find bin/packages -name '*.ipk' | sort | head -1 | xargs basename)
           echo "---------SDK---------------"
           echo "PKG_NAME=$FN"
