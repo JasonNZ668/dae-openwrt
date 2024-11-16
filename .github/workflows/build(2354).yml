@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        arch: [aarch64_generic, x86_64]
+        arch: [x86_64]
 
     steps:
       - name: Checkout source tree
