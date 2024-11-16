@@ -80,8 +80,10 @@ jobs:
           cp -a ../net package/
           sed -i 's/PKG_VERSION:=stable/PKG_VERSION:=${{ env.TAG }}/g' package/net/dae/Makefile
           cat package/net/dae/Makefile
+          echo "---------make dae downlaod check---------------"
           make package/net/dae/{download,check} FIXUP=1 V=s
           cat package/net/dae/Makefile
+          echo "---------make dae compile---------------"
           make package/net/dae/compile V=s
 
           echo "---------find name---------------"
