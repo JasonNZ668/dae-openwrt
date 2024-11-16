@@ -66,6 +66,8 @@ jobs:
           esac
 
           SDK=$(curl -s -L "${TARGET_URL}sha256sums" | grep sdk | sed 's/.* \*//')
+          echo "---------SDK---------------"
+          echo "${TARGET_URL}${SDK}"
           wget "${TARGET_URL}${SDK}" -O sdk.tar.xz
 
           mkdir sdk
@@ -73,6 +75,7 @@ jobs:
           cd sdk
           ./scripts/feeds update -a
           wget "${TARGET_URL}config.buildinfo" -O .config
+          echo "---------make defconfig---------------"
           make defconfig
           cp -a ../net package/
           sed -i 's/PKG_VERSION:=stable/PKG_VERSION:=${{ env.TAG }}/g' package/net/dae/Makefile
@@ -81,8 +84,11 @@ jobs:
           cat package/net/dae/Makefile
           make package/net/dae/compile V=s
 
+          echo "---------find name---------------"
           find bin/packages -name '*.apk' -exec sh -c 'mv "$1" "${1%.apk}_${{ matrix.arch }}.apk"' _ {} \;
           FN=$(find bin/packages -name '*.apk' | sort | head -1 | xargs basename)
+          echo "---------SDK---------------"
+          echo "PKG_NAME=$FN"
           echo "PKG_NAME=$FN" >> $GITHUB_ENV
           cd -
 
