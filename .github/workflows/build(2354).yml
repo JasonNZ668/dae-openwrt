@@ -88,7 +88,7 @@ jobs:
           echo "---------make dae compile  Finished---------------"
 
           ls ${{ github.workspace }}
-          ls bin/packages -r
+          ls -R bin/packages
           echo "🍏 This job's status is ${{ job.status }}."
           
           echo "---------find name---------------"
