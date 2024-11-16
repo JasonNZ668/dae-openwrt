@@ -1,4 +1,4 @@
-name: Build 23.5.4 dae.apk
+name: Build immortalwrt 23.5.4 dae.apk
 
 on:
   workflow_dispatch:
