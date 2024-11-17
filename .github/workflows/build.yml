@@ -1,4 +1,4 @@
-name: Build dae release ipk
+name: Build snapshots dae release apk
 
 on:
   workflow_dispatch:
