@@ -3,7 +3,7 @@ name: Build immortalwrt 23.5.4 dae.ipk
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 */12 * * *'
+    - cron: '0 * */2 * *'
 
 permissions:
   actions: write
@@ -130,7 +130,7 @@ jobs:
           echo "-----------release------------" 
           echo "RELEASE_BODY=$r" 
           echo "RELEASE_BODY=$r" >> $GITHUB_OUTPUT
-          tag=$(date +"%Y%m%d")
+          tag=$(date +"%Y%m%d_v2354")
           echo "RELEASE_TAG=$tag"
           echo "RELEASE_TAG=$tag" >> $GITHUB_OUTPUT
 
