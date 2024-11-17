@@ -76,7 +76,7 @@ jobs:
           make package/net/dae/{download,check} FIXUP=1 V=s
           make package/net/dae/compile V=s
 
-          FN=$(find bin/packages -name 'dae_unstable*.apk' | xargs basename)
+          FN=$(find bin/packages -name 'dae-unstable*.apk' | xargs basename)
           echo "PKG_NAME=$FN" >> $GITHUB_ENV
           cd -
           find sdk/bin/packages -maxdepth 10
