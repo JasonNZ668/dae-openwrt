@@ -1,4 +1,4 @@
-name: Build dae unstable ipk
+name: Build snapshots dae unstable ipk
 
 on:
   workflow_dispatch:
