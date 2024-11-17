@@ -72,11 +72,12 @@ jobs:
           cat package/net/dae/Makefile
           make package/net/dae/compile V=s
 
-          find bin/packages -name '*.apk' -exec sh -c 'mv "$1" "${1%.apk}_${{ matrix.arch }}.apk"' _ {} \;
-          FN=$(find bin/packages -name '*.apk' | sort | head -1 | xargs basename)
+          FN=$(find bin/packages -name 'dae*.apk' | sort | head -1 | xargs basename)
           echo "PKG_NAME=$FN" >> $GITHUB_ENV
+          
           cd -
-
+          find sdk/bin/packages -maxdepth 10
+          
       - name: Publishing to GitHub Artifacts
         uses: actions/upload-artifact@v4
         with:
