@@ -3,7 +3,7 @@ name: Build snapshots dae unstable apk
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * */3 * *'
+    - cron: '* * */3 * *'
 
 permissions:
   actions: write
