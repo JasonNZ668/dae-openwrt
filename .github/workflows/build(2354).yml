@@ -3,7 +3,7 @@ name: Build immortalwrt 23.5.4 dae.ipk
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * */3 * *'
+    - cron: '* * */3 * *'
 
 permissions:
   actions: write
