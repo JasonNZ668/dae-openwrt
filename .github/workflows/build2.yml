@@ -3,7 +3,7 @@ name: Build immortalwrt snapshots dae.apk
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 * */2 * *'
+    - cron: '2 2 * * 4'
 
 permissions:
   actions: write
