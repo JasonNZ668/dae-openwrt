@@ -67,9 +67,10 @@ jobs:
 
           SDK=$(curl -s -L "${TARGET_URL}sha256sums" | grep sdk | sed 's/.* \*//')
           echo "---------SDK---------------"
-          SDK=$(curl -s https://api.github.com/repos/douglarek/build-openwrt/releases/latest | grep browser_download_url | cut -d : -f 2,3 | tr -d \" | grep -E 'openwrt-sdk-' | head -1)
-          # wget $SDK -O sdk.tar.xz
-          echo "${SDK}"
+          SDK2=$(curl -s https://api.github.com/repos/douglarek/build-openwrt/releases/latest | grep browser_download_url | cut -d : -f 2,3 | tr -d \" | grep -E 'openwrt-sdk-' | head -1)
+          # wget $SDK2 -O sdk.tar.xz
+          echo "${SDK2}"
+          ls -l .
           echo "============================="
           
           echo "${TARGET_URL}${SDK}"
