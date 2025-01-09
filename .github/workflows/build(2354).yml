@@ -1,4 +1,4 @@
- name: Build immortalwrt 23.5.4 dae.ipk
+name: Build immortalwrt 23.5.4 dae.ipk
 
 on:
   workflow_dispatch:
